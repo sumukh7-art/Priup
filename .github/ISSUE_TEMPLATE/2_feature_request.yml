@@ -1,0 +1,40 @@
+name: Feature Request
+description: Suggest an idea, feature, or improvement for Priup.
+labels: ["enhancement", "discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        We are excited to hear your ideas! Please describe your feature request below.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to a problem?
+      description: A clear and concise description of what the problem is.
+      placeholder: E.g., I'm always frustrated when...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the solution you'd like
+      description: A clear and concise description of what you want to happen.
+      placeholder: E.g., Add support for a Chrome Extension interface that analyzes policies on the fly.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Describe alternatives you've considered
+      description: A clear and concise description of any alternative solutions or features you've considered.
+      placeholder: E.g., Running a local Python script instead of building an extension.
+    validations:
+      required: false
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context, mockups, or screenshots about the feature request here.
+      placeholder: Drag and drop screenshots or paste links.
+    validations:
+      required: false
