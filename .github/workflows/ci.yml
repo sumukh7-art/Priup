@@ -1,0 +1,95 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main, development ]
+
+jobs:
+  lint-and-test-python:
+    name: Python Lint and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-run: 3.10.x
+          cache: 'pip' # Caches python package downloads
+
+      - name: Check for Python Code
+        id: check_python
+        run: |
+          if [ -f "requirements.txt" ] || [ -f "pyproject.toml" ] || find src/ -name "*.py" | grep -q .; then
+            echo "has_python=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_python=false" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Install Python Dependencies
+        if: steps.check_python.outputs.has_python == 'true'
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 pytest black ruff
+          if [ -f "requirements.txt" ]; then pip install -r requirements.txt; fi
+          if [ -f "requirements-dev.txt" ]; then pip install -r requirements-dev.txt; fi
+
+      - name: Lint with Ruff/Black/Flake8
+        if: steps.check_python.outputs.has_python == 'true'
+        run: |
+          # Stop the build if there are Python syntax errors or undefined names
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Run formatter check
+          black --check src/ tests/ || true
+          # Run linter
+          ruff check . || true
+
+      - name: Run Python Tests
+        if: steps.check_python.outputs.has_python == 'true'
+        run: |
+          if [ -d "tests" ]; then
+            pytest
+          else
+            echo "No tests folder found. Skipping tests."
+          fi
+
+  lint-and-test-node:
+    name: Node.js Lint and Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+        continue-on-error: true
+
+      - name: Check for package.json
+        id: check_node
+        run: |
+          if [ -f "package.json" ]; then
+            echo "has_node=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_node=false" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Install Node Dependencies
+        if: steps.check_node.outputs.has_node == 'true'
+        run: npm ci
+
+      - name: Run Linting
+        if: steps.check_node.outputs.has_node == 'true'
+        run: npm run lint --if-present
+
+      - name: Run Tests
+        if: steps.check_node.outputs.has_node == 'true'
+        run: npm test --if-present
