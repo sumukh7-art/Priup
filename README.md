@@ -9,7 +9,28 @@
 
 Priup is an open-source framework and application designed to help users demystify website Privacy Policies and Terms & Conditions. By combining robust web scraping, NLP cleaning, AI analysis, scoring, and automated summarization, Priup provides human-friendly reports highlighting risks, trackers, and rights.
 
-> **Status:** This project is currently in the **idea and planning phase**. The architecture is being drafted, and directories are set up for code contributors.
+> **Status:** The **first production-quality Python foundation** has been implemented, including a modular scraper (`src/scraper`) and HTML processing/cleaning pipelines (`src/processor`).
+
+---
+
+## Current Progress & Implemented Scraper
+
+We have implemented the initial Python backend foundation under `src/`:
+* **Scraper Module ([src/scraper](file:///C:/Users/ASUS/.gemini/antigravity/scratch/Priup/src/scraper)):** 
+  - Downloads target web pages and follows HTTP redirects using `requests`.
+  - Automatically parses and validates against the website's `robots.txt` using `robots.py` to ensure ethical crawling.
+  - Automatically identifies potential Privacy Policy and Terms & Conditions links within the web page.
+* **Processor Module ([src/processor](file:///C:/Users/ASUS/.gemini/antigravity/scratch/Priup/src/processor)):**
+  - Cleans raw HTML boilerplate (removing scripts, styles, headers, footers, navigation tags, and cookie consent overlays) using `beautifulsoup4`.
+  - Groups texts under structural headings and segments them into clean sentences.
+* **Logger Utility ([src/utils](file:///C:/Users/ASUS/.gemini/antigravity/scratch/Priup/src/utils)):**
+  - Standardized logger output format for tracking execution.
+* **Examples ([examples/](file:///C:/Users/ASUS/.gemini/antigravity/scratch/Priup/examples)):**
+  - An example script `examples/example_scrape.py` demonstrating end-to-end scraper and HTML cleaner execution.
+* **Tests ([tests/](file:///C:/Users/ASUS/.gemini/antigravity/scratch/Priup/tests)):**
+  - Unit tests verifying the terms scraper and cleaner modules with mocked HTTP requests.
+
+---
 
 ---
 
