@@ -1,51 +1,125 @@
 # Priup
 
-**Priup Core** — the core branch of Priup.
+<p align="center">
+  <a href="https://github.com/MrSpideyNihal/Priup/actions"><img src="https://img.shields.io/github/actions/workflow/status/MrSpideyNihal/Priup/ci.yml?branch=main&label=CI&style=flat-square" alt="Build Status"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/MrSpideyNihal/Priup?style=flat-square&color=blue" alt="License"></a>
+  <a href="https://github.com/MrSpideyNihal/Priup/pulls"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome"></a>
+  <a href="ROADMAP.md"><img src="https://img.shields.io/badge/status-planning-orange?style=flat-square" alt="Project Status"></a>
+</p>
 
-Priup is an open-source, free-to-use core architecture that scrapes and summarizes the privacy policies and terms & conditions of a website, then gives users an easy-to-understand score.
+Priup is an open-source framework and application designed to help users demystify website Privacy Policies and Terms & Conditions. By combining robust web scraping, NLP cleaning, AI analysis, scoring, and automated summarization, Priup provides human-friendly reports highlighting risks, trackers, and rights.
 
-> **Status:** This project is currently in the idea / concept phase. Architecture and implementation are subject to change.
+> **Status:** This project is currently in the **idea and planning phase**. The architecture is being drafted, and directories are set up for code contributors.
 
-## Table of Contents
+---
 
-- [About](#about)
-- [Architecture](#architecture)
-- [Status](#status)
-- [Contributing](#contributing)
-- [License](#license)
+## Architectural Workflow
 
-## About
-
-Reading privacy policies and terms of service is tedious, and most people skip them entirely. Priup aims to solve this by:
-
-1. Scraping the privacy policy and terms & conditions text from a website
-2. Summarizing the content using an NLP model
-3. Generating a simple, understandable score
-4. Presenting that score to the user
-
-## Architecture
+The complete, end-to-end data pipeline of Priup operates as follows:
 
 ```
-Text (Privacy Policy, Terms & Conditions)
-              │
-              ▼
-       NLP Model (Summarize)
-              │
-              ▼
-         Generate Score
-              │
-              ▼
-        Send to User
+Website URL
+     │
+     ▼ [Scraper]
+Extract Privacy Policy & Terms (raw HTML/text)
+     │
+     ▼ [Processor]
+Clean & Process Text (NLP cleaning, sentence segmentation)
+     │
+     ▼ [Analyzer]
+AI / NLP Analysis (semantic categorization & risk detection)
+     │
+     ▼ [Reporter]
+Summarization & Scoring (risk weights and highlights)
+     │
+     ▼
+Simple Human-Friendly Report (Score & summary cards)
 ```
 
-## Status
+For a detailed view of the system design and technology choices, read the [Architecture Documentation](docs/architecture.md).
 
-This project is in the **idea phase**. No stable implementation exists yet. Design decisions, tooling, and scope are still being defined.
+---
+
+## Project Structure
+
+```text
+Priup/
+├── .github/                 # GitHub workflows & issue/PR templates
+├── docs/                    # Architectural plans and guidelines
+│   ├── architecture.md      # Detailed system design
+│   ├── development.md       # Setup & environment guides
+│   └── coding_standards.md  # Standard formatting & style rules
+├── src/                     # Core source code
+│   ├── scraper/             # Target webpage content extraction
+│   ├── processor/           # Text sanitization, chunking, and metadata parsing
+│   ├── analyzer/            # AI analysis, classification, and scoring
+│   └── reporter/            # Summary generation and report building
+├── tests/                   # Unit & integration tests
+├── examples/                # Example scripts demonstrating CLI & library usage
+├── CHANGELOG.md             # Release history
+├── CODE_OF_CONDUCT.md       # Community guidelines
+├── CONTRIBUTING.md          # Guide for developers & PR checklist
+├── LICENSE                  # MIT License details
+├── ROADMAP.md               # Future milestones & evolution plan
+└── SECURITY.md              # Security policies & reporting channels
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+To set up the development environment, make sure you have:
+* **Node.js** (v18 or higher) for the scrapers/scaffolding
+* **Python** (v3.10 or higher) for the core AI/NLP models
+
+### Installation
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/MrSpideyNihal/Priup.git
+   cd Priup
+   ```
+
+2. **Backend (Python) Setup:**
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   pip install -r requirements.txt # once created
+   ```
+
+3. **Frontend / Tools (Node.js) Setup:**
+   ```bash
+   npm install
+   ```
+
+For detailed setup instructions and env configurations, check [docs/development.md](docs/development.md).
+
+---
+
+## Roadmap
+
+We are progressing through several development stages:
+
+1. **Phase 1: Scraping & Text Processing** (Extraction engines and cleaning pipelines)
+2. **Phase 2: Semantic Analysis & Risk Modeling** (Classification of legal clauses)
+3. **Phase 3: Scoring & Summarization** (Scoring engine & LLM summary templates)
+4. **Phase 4: Extension & User Reports** (Chrome Extension and web app interface)
+
+Read [ROADMAP.md](ROADMAP.md) to learn how to contribute to current milestones.
+
+---
 
 ## Contributing
 
-Contributions, ideas, and discussions are welcome. Since the project is early-stage, feel free to open an issue to discuss proposals before submitting a pull request.
+We welcome contributions from developers, UI/UX designers, privacy lawyers, and writers!
+* Read [CONTRIBUTING.md](CONTRIBUTING.md) to understand our branching, issue flow, and PR guidelines.
+* Follow our code format guidelines in [docs/coding_standards.md](docs/coding_standards.md).
+* Keep standard behaviors in check using the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+---
 
 ## License
 
-Priup is open-source and free to use. *(Add your chosen license here, e.g. MIT, Apache 2.0.)*
+Priup is open-source and licensed under the [MIT License](LICENSE).

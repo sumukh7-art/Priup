@@ -1,0 +1,55 @@
+name: Bug Report
+description: Report a bug or error encountered in Priup.
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug! Please fill out the form below as accurately as possible to help us diagnose and fix the issue.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of what the bug is.
+      placeholder: E.g., The scraper fails to extract privacy policy text on JavaScript-heavy websites.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: How did you encounter this bug? Include sample code, command lines, or website URLs.
+      placeholder: |
+        1. Run `npm run scrape -- --url "https://example.com/privacy"`
+        2. Inspect output logs
+        3. See error: "Timeout waiting for selector..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+      placeholder: E.g., The scraper should fallback to a static fetch or retry with a longer timeout and output clean text.
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots-logs
+    attributes:
+      label: Screenshots or Logs
+      description: If applicable, add screenshots, console output, or stack traces to help explain your problem.
+      placeholder: Paste terminal logs or drag-and-drop images here.
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment Info
+      description: Details about your system and dependencies.
+      placeholder: |
+        - OS: Windows 11 / macOS / Ubuntu
+        - Node version: v18.16.0
+        - Python version: v3.10.8
+        - Browser / Tool: Playwright v1.35.0
+    validations:
+      required: true
